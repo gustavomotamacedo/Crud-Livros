@@ -78,7 +78,7 @@ public class MyDbHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void delete(String id) {
+    public void deleteOneRow(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         long result = db.delete(TABLE_NAME, COLUMN_ID+"=?", new String[]{id});
         if (result == -1) {

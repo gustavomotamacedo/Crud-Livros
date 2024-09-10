@@ -1,6 +1,7 @@
 package com.gustavomacedo.estudossqlite;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -8,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -49,7 +51,6 @@ public class UpdateActivity extends AppCompatActivity {
 
         btnUpd.setOnClickListener(v -> {
             MyDbHelper dbHelper = new MyDbHelper(this);
-            id = getIntent().getStringExtra("id");
             title = String.valueOf(edtBookName2.getText());
             author = String.valueOf(edtBookAuthor2.getText());
             pages = String.valueOf(edtBookPages2.getText());
@@ -62,16 +63,36 @@ public class UpdateActivity extends AppCompatActivity {
         });
 
         btnDel.setOnClickListener(v -> {
-            MyDbHelper dbHelper = new MyDbHelper(this);
-            id = getIntent().getStringExtra("id");
+            confirmDialog();
 
-            dbHelper.delete(id);
 
-            Intent in = new Intent(this, MainActivity.class);
-            finish();
-            startActivity(in);
         });
 
+    }
+
+    private void confirmDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Deletar " + title);
+        builder.setMessage("Tem certeza que deseja deletar " + title + "?");
+        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                MyDbHelper dbHelper = new MyDbHelper(UpdateActivity.this);
+                dbHelper.deleteOneRow(id);
+                Intent in = new Intent(UpdateActivity.this, MainActivity.class);
+                finish();
+                startActivity(in);
+            }
+        });
+        builder.setNegativeButton("Nao", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent in = new Intent(UpdateActivity.this, MainActivity.class);
+                finish();
+                startActivity(in);
+            }
+        });
+        builder.create().show();
     }
 
     private void getAndSetIntentData() {
