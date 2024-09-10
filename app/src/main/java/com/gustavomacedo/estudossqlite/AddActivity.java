@@ -42,8 +42,8 @@ public class AddActivity extends AppCompatActivity {
             dbHelper.addBook(strBookName, strBookAuthor, intBookPages);
 
             Intent in = new Intent(this, MainActivity.class);
-            finish();
             startActivity(in);
+            finish();
 
         });
 

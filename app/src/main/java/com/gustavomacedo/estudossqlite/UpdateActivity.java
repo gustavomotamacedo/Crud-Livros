@@ -58,8 +58,8 @@ public class UpdateActivity extends AppCompatActivity {
             dbHelper.updateDataById(id, title, author, pages);
 
             Intent in = new Intent(this, MainActivity.class);
-            finish();
             startActivity(in);
+            finish();
         });
 
         btnDel.setOnClickListener(v -> {
@@ -80,16 +80,16 @@ public class UpdateActivity extends AppCompatActivity {
                 MyDbHelper dbHelper = new MyDbHelper(UpdateActivity.this);
                 dbHelper.deleteOneRow(id);
                 Intent in = new Intent(UpdateActivity.this, MainActivity.class);
-                finish();
                 startActivity(in);
+                finish();
             }
         });
         builder.setNegativeButton("Nao", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent in = new Intent(UpdateActivity.this, MainActivity.class);
-                finish();
                 startActivity(in);
+                finish();
             }
         });
         builder.create().show();

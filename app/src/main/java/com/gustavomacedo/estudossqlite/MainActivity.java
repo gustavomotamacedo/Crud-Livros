@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -25,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView rcvList;
     FloatingActionButton fbtAdd;
+    ImageView imgEmpty;
 
     MyDbHelper myDB;
     ArrayList<String> bookId;
@@ -47,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
         rcvList = findViewById(R.id.rcvList);
         fbtAdd = findViewById(R.id.fbtAdd);
+        imgEmpty = findViewById(R.id.imgEmpty);
 
         myDB = new MyDbHelper(this);
 
@@ -70,9 +75,12 @@ public class MainActivity extends AppCompatActivity {
     private void storeDataInArrays() {
         Cursor cursor = myDB.readAllData();
         if (cursor.getCount() == 0) {
+            imgEmpty.setVisibility(View.VISIBLE);
             Toast.makeText(this, "Não Dados", Toast.LENGTH_SHORT).show();
         } else {
             while (cursor.moveToNext()) {
+                if (imgEmpty.getVisibility() == View.VISIBLE)
+                    imgEmpty.setVisibility(View.INVISIBLE);
                 bookId.add(cursor.getString(0));
                 bookName.add(cursor.getString(1));
                 bookAuthor.add(cursor.getString(2));
@@ -92,15 +100,29 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.deleteAll) {
-            MyDbHelper dbHelper = new MyDbHelper(MainActivity.this);
-            dbHelper.deleteAllData();
-
-            Intent in = new Intent(this, MainActivity.class);
-            finish();
-            startActivity(in);
+            confirmDialog();
 
             Toast.makeText(this, "Deletados", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void confirmDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Deletar todos");
+        builder.setMessage("Tem certeza que deseja deletar todos os títulos?");
+        builder.setPositiveButton("Sim", (dialog, which) -> {
+            MyDbHelper dbHelper = new MyDbHelper(MainActivity.this);
+            dbHelper.deleteAllData();
+            Intent in = new Intent(MainActivity.this, MainActivity.class);
+            startActivity(in);
+            finish();
+        });
+        builder.setNegativeButton("Nao", (dialog, which) -> {
+            Intent in = new Intent(MainActivity.this, MainActivity.class);
+            startActivity(in);
+            finish();
+        });
+        builder.create().show();
     }
 }
