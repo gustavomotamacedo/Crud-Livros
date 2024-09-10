@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         Cursor cursor = myDB.readAllData();
         if (cursor.getCount() == 0) {
             imgEmpty.setVisibility(View.VISIBLE);
-            Toast.makeText(this, "Não Dados", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Não há dados", Toast.LENGTH_SHORT).show();
         } else {
             while (cursor.moveToNext()) {
                 if (imgEmpty.getVisibility() == View.VISIBLE)
