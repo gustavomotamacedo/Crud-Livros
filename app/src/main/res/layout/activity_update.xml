@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UpdateActivity">
+
+    <LinearLayout
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/edtBookName2"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_margin="8dp"
+            android:ems="10"
+            android:hint="Nome do livro"
+            android:inputType="text"
+            android:textColorHint="#546E7A"
+            tools:ignore="HardcodedText" />
+
+        <EditText
+            android:id="@+id/edtBookAuthor2"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_margin="8dp"
+            android:ems="10"
+            android:hint="Nome do autor"
+            android:inputType="text"
+            android:textColorHint="#546E7A"
+            tools:ignore="HardcodedText" />
+
+        <EditText
+            android:id="@+id/edtBookPages2"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_margin="8dp"
+            android:ems="10"
+            android:hint="Número de páginas"
+            android:inputType="number"
+            android:textColorHint="#546E7A"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/btnUpd"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_margin="8dp"
+            android:padding="6dp"
+            android:text="Atualizar"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/btnDel"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_margin="8dp"
+            android:padding="6dp"
+            android:text="Deletar"
+            android:textColor="#F00"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
