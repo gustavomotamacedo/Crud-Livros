@@ -100,4 +100,9 @@ public class MyDbHelper extends SQLiteOpenHelper {
 
         return cursor;
     }
+
+    public void deleteAllData() {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_NAME);
+    }
 }

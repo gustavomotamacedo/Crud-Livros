@@ -3,9 +3,13 @@ package com.gustavomacedo.estudossqlite;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -65,15 +69,38 @@ public class MainActivity extends AppCompatActivity {
 
     private void storeDataInArrays() {
         Cursor cursor = myDB.readAllData();
-        if(cursor.getCount() == 0) {
+        if (cursor.getCount() == 0) {
             Toast.makeText(this, "Não Dados", Toast.LENGTH_SHORT).show();
         } else {
-            while(cursor.moveToNext()) {
+            while (cursor.moveToNext()) {
                 bookId.add(cursor.getString(0));
                 bookName.add(cursor.getString(1));
                 bookAuthor.add(cursor.getString(2));
                 bookPages.add(cursor.getString(3));
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.my_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.deleteAll) {
+            MyDbHelper dbHelper = new MyDbHelper(MainActivity.this);
+            dbHelper.deleteAllData();
+
+            Intent in = new Intent(this, MainActivity.class);
+            finish();
+            startActivity(in);
+
+            Toast.makeText(this, "Deletados", Toast.LENGTH_SHORT).show();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
